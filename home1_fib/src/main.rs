@@ -12,11 +12,12 @@ fn main() {
         input.clear();
         io::stdin().read_line(&mut input).unwrap();
         let input : i32 = match input.trim().parse() {
-            Ok(num) => num,
+            Ok(num) if num > 10 => num,            
             Err(_) => {
                 println!("A number was expected");
                 continue;
             },
+            _ => { continue;}
         };
         println!("Result: {}", fib(input));
 
