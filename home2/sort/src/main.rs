@@ -1,40 +1,21 @@
+mod config;
+mod quick_sort;
+
 use std::env;
 use std::process;
+use config::Config;
 
 fn main() {
 
-    let args : Vec<&String> = env::args().collect();
-    match Config::from_args(&args) {
-        Ok(config) => { exec_sort(config.filename, config.algo); }
-        Err(error) => { println!("{}", error); process.exit(1);}
-    }
-    println!("Hello, world!");
-}
+    let args : Vec<String> = env::args().collect();
+    let config = Config::from_args(&args).unwrap_or_else(|err| {        
+         println!("Failed to parse parameters: {}", err); 
+         println!("Usage: sortme <input_file> <output_file> QuickSort");
+         process::exit(1);
+    });
 
-fn exec_sort(filename: &str, algo: &Algo){
-    println!("Executing {:?} on file {}", algo, filename);
-}
-
-#[derive(Debug)]
-struct Config {
-    filename: String,
-    algo: Algo,
-}
-
-impl Config {
-    fn from_args(args: &[String]) -> Result<Self, &str> {
-        if args.len() < 3 {
-            return Err("Expected 2 arguments");
-        }
-
-        Ok(Self {
-            filename: args[1].clone(),
-            algo: Algo::QuickSort,        
-        })
-    }
-}
-
-#[derive(Debug)]
-pub enum Algo {
-    QuickSort
+    println!("Executing {:?} on file {} output to {}", &config.algo, config.input_file, config.output_file);
+    match &config.algo {
+        QuickSort => quick_sort::QuickSort::exec_sort(&config.input_file, &config.output_file, config.algo),
+    };    
 }
