@@ -19,13 +19,14 @@ fn main() {
 
     println!("Executing {:?} on file {} output to {}", &config.algo, config.input_file, config.output_file);
     
-    let lines : Vec<String> = read_lines(&config.input_file).unwrap_or_else(|err| {
+
+    let mut input : Vec<String> = read_lines(&config.input_file).unwrap_or_else(|err| {
         println!("Failed to read input file: {}", err);
         process::exit(1);
     });
 
     match &config.algo {
-        config::Algo::QuickSort => quick_sort::QuickSort::exec_sort(&lines),
+        config::Algo::QuickSort => quick_sort::QuickSort::exec_sort(&mut input),
     };
 }
 
