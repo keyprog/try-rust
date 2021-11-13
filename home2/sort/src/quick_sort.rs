@@ -4,10 +4,7 @@ pub struct QuickSort {
 
 impl QuickSort {    
     pub fn exec_sort(mut input: &mut Vec<String>){
-        //for line in input.clone() {
-            //println!("{}", line);
-        //}
-
+        println!("Executing QuickSort");
         let end = input.len();
         Self::quick_sort(&mut input, 0, end);
         for line in input.clone() {
@@ -27,8 +24,8 @@ impl QuickSort {
     }
 
     fn partition(input: &mut Vec<String>, start: usize, end: usize) -> usize {
-        let piv = input[end].clone();
-        let mut low = start;
+        let piv: String = input[end].clone();
+        let mut low : usize = start;
         for i in start..end {
             if input[i] < piv {                
                 input.swap(low, i);                

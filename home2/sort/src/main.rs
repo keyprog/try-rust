@@ -1,5 +1,6 @@
 mod config;
 mod quick_sort;
+mod merge_sort;
 
 use std::env;
 use std::process;
@@ -27,6 +28,7 @@ fn main() {
 
     match &config.algo {
         config::Algo::QuickSort => quick_sort::QuickSort::exec_sort(&mut input),
+        config::Algo::MergeSort => merge_sort::Merge_Sort::exec_sort(&mut input),
     };
 }
 

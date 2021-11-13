@@ -14,12 +14,24 @@ impl Config {
         Ok(Self {
             input_file: args[1].clone(),
             output_file: args[2].clone(),
-            algo: Algo::QuickSort,
+            algo: args[3].parse().unwrap(),
         })
     }
 }
 
 #[derive(Debug)]
 pub enum Algo {
-    QuickSort,
+    QuickSort, MergeSort
+}
+
+impl std::str::FromStr for Algo {
+    type Err = String;
+
+    fn from_str(s: &str)-> Result<Self, Self::Err> {
+        return match s {
+            "QuickSort" => Ok(Self::QuickSort),
+            "MergeSort" => Ok(Self::MergeSort),
+            _ => Err(format!("Unexpected algo")),
+        };
+    }
 }
